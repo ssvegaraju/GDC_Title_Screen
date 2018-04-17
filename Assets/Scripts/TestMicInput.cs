@@ -1,7 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Audio;
 
 // Changes object's audiosource to the stereo mix
 // Requires headphones to be plugged in to 3.5mm jack
@@ -9,19 +6,29 @@ using UnityEngine.Audio;
 [RequireComponent(typeof(AudioSource))]
 public class TestMicInput : MonoBehaviour {
 
-    private AudioSource aud;
-    public bool useDesktopAudio = false;
+    private AudioSource _aud;
+    public bool UseDesktopAudio;
+	
 	// Use this for initialization
-	void Awake () {
-        if (useDesktopAudio)
-        {
-            aud = GetComponent<AudioSource>();
-            aud.clip = Microphone.Start(null, true, 10, AudioSettings.outputSampleRate);
-            aud.loop = true; // Set the audClip to loop
-            aud.mute = true; // Mute the sound, we don't want the player to hear it
-            while (!(Microphone.GetPosition(null) > 0)) { } // Wait until the recording has started
-            aud.Play(); // Play the aud source!
-            aud.mute = false;
-        }
-    }
+	private void Awake () {
+	    if (!UseDesktopAudio) return;
+
+		string stereoMixName = null;
+		foreach (string device in Microphone.devices) {
+			print(device);
+			if (device.Contains("Stereo Mix"))
+			{
+				stereoMixName = device;
+				break;
+			}
+		}
+		
+	    _aud = GetComponent<AudioSource>();
+		// If there's no Stereo Mix, stereoMixName will be null
+		// WARNING: THE DEVICE CAN'T BE CHOSEN UNTIL UNITY 2018.2
+	    _aud.clip = Microphone.Start(stereoMixName, true, 9999, AudioSettings.outputSampleRate);
+		// Wait until the recording has started
+	    while (!(Microphone.GetPosition(null) > 0)) { }
+	    _aud.Play();
+	}
 }

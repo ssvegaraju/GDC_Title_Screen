@@ -3,6 +3,8 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2017
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GDC_Title_Screen", "GDC_Title_Screen.csproj", "{8B001C4A-9E61-A735-D517-4E40D8197DC8}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GDC_Title_Screen.Editor.Plugins", "GDC_Title_Screen.Editor.Plugins.csproj", "{3D2CA468-3C5A-51A9-A5AF-B5001E57CE1E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -13,6 +15,10 @@ Global
 		{8B001C4A-9E61-A735-D517-4E40D8197DC8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8B001C4A-9E61-A735-D517-4E40D8197DC8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8B001C4A-9E61-A735-D517-4E40D8197DC8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3D2CA468-3C5A-51A9-A5AF-B5001E57CE1E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3D2CA468-3C5A-51A9-A5AF-B5001E57CE1E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3D2CA468-3C5A-51A9-A5AF-B5001E57CE1E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3D2CA468-3C5A-51A9-A5AF-B5001E57CE1E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

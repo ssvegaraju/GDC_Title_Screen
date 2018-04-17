@@ -1,19 +1,15 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 // The meat of the project. It grabs the sound data from the audio
 // source that is attached. Analyzes the sound, and then uses the value
-// to scale cubes that are generated in various patterns. (At this time: Circle).
+// to scale bars that are generated in various patterns. (At this time: Circle).
 [RequireComponent(typeof(AudioSource))]
 public class SoundVisual : MonoBehaviour {
 
     // How many samples to split the sound data into.
     private const int SAMPLE_SIZE = 1024;
 
-    // For the moment I'm just using a cube i made in blender that has
-    // a pivot point on the corner so it only scales in one direction.
-    public GameObject cubePrefab;
+    public GameObject BarPrefab;
 
     /// <summary>
     ///  These three values are set by the analysis of the sound
@@ -22,15 +18,15 @@ public class SoundVisual : MonoBehaviour {
     private float dbValue;
     private float pitchValue;
 
-    // Clamp the cubes from stretching way too far so they look
+    // Clamp the bars from stretching way too far so they look
     // somewhat comparative.
-    public float maxVisualScale = 25f;
+    public float maxVisualScale = 5;
 
-    // Multplier by which to scale all the cubes
-    public float sizeModifier = 10f;
+    // Multplier by which to scale all the bars
+    public float sizeModifier = 175;
 
-    // How quickly the cubes descend from a spike
-    public float smoothSpeed = 10f;
+    // How quickly the bars descend from a spike
+    public float smoothSpeed = 10;
 
     // Which percentage of samples to keep (most of the latter portion barely move
     // so i only use a portion for the visualization).
@@ -41,14 +37,14 @@ public class SoundVisual : MonoBehaviour {
     private float[] spectrum; // Same.
     private float sampleRate;
 
-    private Transform[] visuals; // Store the transforms of the cubes.
-    private float[] scales;      // Store the scales (y) of the cubes.
-    public int amountOfVisuals = 64; // How many cubes to use.
+    private Transform[] visuals; // Store the transforms of the bars.
+    private float[] scales;      // Store the scales (y) of the bars.
+    public int amountOfVisuals = 64; // How many bars to use.
 
     public float circleRadius = 5;
 
 	// Use this for initialization
-	void Start () {
+	private void Start () {
         source = GetComponent<AudioSource>();
         samples = new float[SAMPLE_SIZE];
         spectrum = new float[SAMPLE_SIZE];
@@ -56,16 +52,16 @@ public class SoundVisual : MonoBehaviour {
 
         //SpawnLine();
         SpawnCircle();
-        SetScale(); // This is just to make the circle of cubes fit in the monado.
+        SetScale(); // This is just to make the circle of bars fit in the monado.
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	private void Update () {
         AnalyzeSound(); 
         UpdateVisuals(); 
 	}
 
-    // Spawn cubes to be visualized with audio in a circle 
+    // Spawn bars to be visualized with audio in a circle 
     private void SpawnCircle()
     {
         visuals = new Transform[amountOfVisuals];
@@ -75,35 +71,19 @@ public class SoundVisual : MonoBehaviour {
 
         for (int i = 0; i < amountOfVisuals; i++)
         {
-            float angle = i * 1.0f / amountOfVisuals;
-            angle = angle * Mathf.PI * 2;
+			float rads = Mathf.PI * 2 * i / amountOfVisuals;
+			float degs = 360.0f * i / amountOfVisuals;
 
-            float x = center.x + Mathf.Cos(angle) * circleRadius;
-            float y = center.y + Mathf.Sin(angle) * circleRadius;
+            float x = center.x + Mathf.Cos(rads) * circleRadius;
+            float y = center.y + Mathf.Sin(rads) * circleRadius;
 
-            Vector3 pos = center + new Vector3(x, y, 0);
-                //GameObject.CreatePrimitive(PrimitiveType.Cube) as GameObject;
-            GameObject g = Instantiate(cubePrefab, pos, Quaternion.LookRotation(Vector3.forward, pos), transform);
+			Vector3 pos = center + new Vector3(x, y, 0);
+			GameObject g = Instantiate(BarPrefab, pos, Quaternion.Euler(new Vector3(0, 0, degs)), transform);
             visuals[i] = g.transform;
         }
     }
 
-    // Spawn cubes to be visualized with audio in a line
-    void SpawnLine()
-    {
-        visuals = new Transform[amountOfVisuals];
-        scales = new float[amountOfVisuals];
-
-        for (int i = 0; i < amountOfVisuals; i++)
-        {
-            GameObject g = GameObject.CreatePrimitive(PrimitiveType.Cube) as GameObject;
-            visuals[i] = g.transform;
-            visuals[i].parent = transform;
-            visuals[i].position = Vector3.right * i;
-        }
-    }
-
-    // Set scale of cubes based on the values from analysis.
+    // Set scale of bars based on the values from analysis.
     private void UpdateVisuals()
     {
         int visualIndex = 0, spectrumIndex = 0;
@@ -128,7 +108,7 @@ public class SoundVisual : MonoBehaviour {
             if (scales[visualIndex] > maxVisualScale)
                 scales[visualIndex] = maxVisualScale;
 
-            visuals[visualIndex].localScale = Vector3.one + Vector3.up * scales[visualIndex];
+			visuals[visualIndex].localScale = Vector3.one + Vector3.right * scales[visualIndex];
             visualIndex++;
         }
     }

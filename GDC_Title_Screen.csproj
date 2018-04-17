@@ -232,6 +232,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Scripts\Countdown.cs" />
+    <Compile Include="Assets\Scripts\FlareVisualizer.cs" />
     <Compile Include="Assets\Scripts\GetWindowTitle.cs" />
     <Compile Include="Assets\Scripts\Rotator.cs" />
     <Compile Include="Assets\Scripts\SetTimeToWait.cs" />
