@@ -6,8 +6,5 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/TimeEntry.unity
-    guid: d9d69a4e71b8de84e9134028212e2d4c
-  - enabled: 1
     path: Assets/Scenes/Main.unity
     guid: 04f8426af2555bb45b2e7da3634fcc37

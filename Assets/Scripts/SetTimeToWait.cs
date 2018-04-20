@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 
@@ -10,8 +8,14 @@ public class SetTimeToWait : MonoBehaviour {
         PlayerPrefs.SetInt("Time", int.Parse(value));
     }
 
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Return))
+            LoadNextLevel();
+    }
+
     public void LoadNextLevel()
     {
-        AsyncOperation loading = UnityEngine.SceneManagement.SceneManager.LoadSceneAsync("Main");
+        UnityEngine.SceneManagement.SceneManager.LoadSceneAsync("Main");
     }
 }
