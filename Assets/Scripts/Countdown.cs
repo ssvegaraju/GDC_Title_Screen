@@ -32,7 +32,7 @@ public class Countdown : MonoBehaviour {
 
 	private void UpdateTime()
 	{
-		for (int i = 0; i < _keyCodes.Length; i++)
+		for (int i = 0; i < 10; i++)
 		{
 			if (Input.GetKeyDown(_keyCodes[i]))
 			{
