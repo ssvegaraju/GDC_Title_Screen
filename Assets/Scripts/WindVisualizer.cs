@@ -58,6 +58,9 @@ public class WindVisualizer : IVisualizerModule
             float thisParticleXSpeed = thisSpeed * (0.9f + 0.1f * thisParticleXSpeedModifier);
             float thisParticleYSpeed = Random.Range(-0.05f, 0.05f) * thisParticleXSpeed;
             particle.transform.position += new Vector3(thisParticleXSpeed, thisParticleYSpeed);
+
+            // apply scaling transformation.
+            particle.transform.localScale = Vector3.one * thisSpeed;
             
             // Kill if too far
             if (particle.transform.position.x / KillX > 1)
